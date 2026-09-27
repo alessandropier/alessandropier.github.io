@@ -45,7 +45,7 @@ As demonstrated during testing, the vast majority of users showed a strong **pre
 ### ⚙️ Key Technical Features
 ---
 <figure style="text-align: center; margin-bottom: 0px;">
-  <img src="../../../public/assets/images/Personalized-Fashion-adv-Pipeline.png" alt="Testo alternativo" style="display: block; margin: 0 auto;">
+  <img src="/assets/images/Personalized-Fashion-adv-Pipeline.png" alt="Personalized Fashion Advertisement pipeline" style="display: block; margin: 0 auto;">
   <figcaption style="font-style: italic; margin-top: 2px;">Project Pipeline</figcaption>
 </figure>
 
