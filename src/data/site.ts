@@ -2,7 +2,7 @@ import type { SiteMeta } from './types';
 
 export const site: SiteMeta = {
   url: 'https://alessandropier.github.io',
-  title: 'Dev Portfolio',
+  title: 'Alessandro Piergiovanni | Software Engineer',
   description:
     'Personal portfolio of Alessandro Piergiovanni — Software Engineer showcasing projects, technical skills, experience, and interests.',
   keywords: [
@@ -34,6 +34,9 @@ export const site: SiteMeta = {
     email: 'alessandropiergiovanni.info@gmail.com',
     telephone: '',
     addressLocality: 'Bari, Puglia, Italy',
-    sameAs: [],
+    sameAs: [
+  'https://github.com/alessandropier',
+  'https://www.linkedin.com/in/alessandropiergiovanni001/',
+],
   },
 };
