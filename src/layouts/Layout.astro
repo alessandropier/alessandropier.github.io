@@ -1,0 +1,93 @@
+---
+import { site } from '../data/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+  article?: { datePublished: string; image: string } | null;
+}
+
+const {
+  title = site.title,
+  description = site.description,
+  ogImage: ogImageOverride,
+  article = null,
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, site.url).href;
+const ogImage = new URL((ogImageOverride ?? site.ogImage).replace('./', '/'), site.url).href;
+
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: site.person.name,
+  jobTitle: site.person.jobTitle,
+  image: new URL(site.person.image.replace('./', '/'), site.url).href,
+  email: site.person.email,
+  telephone: site.person.telephone,
+  address: { '@type': 'PostalAddress', addressLocality: site.person.addressLocality },
+  ...(site.person.sameAs.length ? { sameAs: site.person.sameAs } : {}),
+};
+---
+
+<!DOCTYPE html>
+<html lang={site.locale}>
+
+<head>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+  <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+
+  <meta charset="UTF-8" />
+  <base href="/" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+
+  <meta name="description" content={description} />
+  <meta name="keywords" content={site.keywords.join(', ')} />
+  <meta name="theme-color" content={site.themeColor} />
+  <link rel="canonical" href={canonical} />
+
+  <link rel="shortcut icon" href={site.favicon} type="image/x-icon" />
+
+  <link rel="stylesheet" href="./assets/css/style.css" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <meta property="og:type" content={article ? 'article' : 'website'} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:image" content={ogImage} />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={ogImage} />
+
+  <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
+
+  {article && (
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'BlogPosting',
+        headline: title,
+        image: new URL(article.image.replace('./', '/'), site.url).href,
+        datePublished: article.datePublished,
+        author: { '@type': 'Person', name: site.person.name },
+        mainEntityOfPage: canonical,
+      })}
+    />
+  )}
+</head>
+
+<body>
+  <slot />
+</body>
+
+</html>

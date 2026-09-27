@@ -1,0 +1,87 @@
+---
+import { aboutText, techStack } from '../../data/about';
+import Services from './Services.astro';
+import Testimonials from './Testimonials.astro';
+import Modal from './Modal.astro';
+import Clients from './Clients.astro';
+---
+
+<article class="about active" data-page="about">
+
+  <header>
+    <h2 class="h2 article-title">About me</h2>
+  </header>
+
+  <section class="about-text" style="text-align: justify;">
+    {aboutText.map((paragraph) => <p set:html={paragraph} />)}
+  </section>
+
+  {/* Sezione Cubotti Tech Stack */}
+  <section class="skill-cubes-section" style="margin-top: 35px;">
+    <h3 class="h3" style="margin-bottom: 20px;">Languages, Tools and Softwares</h3>
+
+    <div class="skills-grid">
+      {techStack.map((tech) => (
+        <div class="skill-card">
+          {/* Se l'icona inizia con simple-icons usa lo span di Iconify, altrimenti usa la <i> di Devicon */}
+          {tech.icon.startsWith('simple-icons') ? (
+            <span class="iconify" data-icon={tech.icon}></span>
+          ) : (
+            <i class={tech.icon}></i>
+          )}
+          <span>{tech.name}</span>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  {/* <Services /> */}
+
+  {/* <Testimonials /> */}
+
+  <Modal />
+
+  {/* <Clients /> */}
+
+</article>
+
+<style>
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(95px, 1fr));
+    gap: 15px;
+  }
+
+  .skill-card {
+    background: var(--eerie-black-2, #2b2b2c);
+    border: 1px solid var(--jet, #383838);
+    border-radius: 14px;
+    padding: 16px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+  }
+
+  .skill-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--orange-yellow-crayola, #ffbf00);
+    background: var(--border-color-gradient, rgba(255, 191, 0, 0.05));
+  }
+
+  /* Gestione comune delle dimensioni per entrambe le icone */
+  .skill-card i,
+  .skill-card .iconify {
+    font-size: 34px;
+    width: 34px;
+    height: 34px;
+  }
+
+  .skill-card span {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--light-gray, #d6d6d6);
+  }
+</style>

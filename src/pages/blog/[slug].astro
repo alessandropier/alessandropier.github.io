@@ -1,0 +1,525 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Sidebar from '../../components/Sidebar.astro';
+import Navbar from '../../components/Navbar.astro';
+import { site } from '../../data/site';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const {
+  title,
+  category,
+  datetime,
+  dateLabel,
+  image,
+  alt,
+  excerpt,
+  github,
+  youtube
+} = post.data;
+---
+
+<Layout
+  title={`${title} — ${site.title}`}
+  description={excerpt}
+  ogImage={image}
+  article={{ datePublished: datetime, image }}
+>
+  <main>
+
+    <Sidebar />
+
+    <div class="main-content">
+
+      <Navbar />
+
+      <article class="blog active">
+
+        <header>
+          <a href="/#blog" class="blog-back">&#8592; Back to Blog</a>
+          <h2 class="h2 article-title">{title}</h2>
+        </header>
+
+        <section class="blog-posts">
+
+          <figure class="blog-banner-box post-banner">
+            <img src={image} alt={alt} loading="lazy" />
+          </figure>
+
+          <div class="blog-meta">
+            <p class="blog-category">{category}</p>
+            <span class="dot"></span>
+            <time datetime={datetime}>{dateLabel}</time>
+          </div>
+
+                {(github || youtube) && (
+        <div class="project-links">
+
+          {github && (
+            <a
+              href={github}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="project-link"
+            >
+              <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                <path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8z"></path>
+              </svg>
+
+              <span>GitHub Repository</span>
+            </a>
+          )}
+
+          {youtube && (
+            <a
+              href={youtube}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="project-link"
+            >
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"></path>
+              </svg>
+
+              <span>YouTube Video</span>
+            </a>
+          )}
+
+        </div>
+      )}
+
+          <div class="post-body">
+            <Content />
+          </div>
+
+        </section>
+
+      </article>
+
+    </div>
+
+  </main>
+
+  <script>
+    import '../../scripts/blog-post.ts';
+  </script>
+
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js" is:inline></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js" is:inline></script>
+</Layout>
+
+<style>
+  /* ================================
+     BACK TO BLOG
+     ================================ */
+
+  .blog-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 20px;
+
+    color: var(--orange-yellow-crayola, #ffdb70);
+    font-size: var(--fs-6, 0.875rem);
+    text-decoration: none;
+
+    transition: opacity 0.2s ease;
+  }
+
+  .blog-back:hover {
+    opacity: 0.8;
+  }
+
+
+  /* ================================
+     POST BANNER
+     ================================ */
+
+    .post-banner {
+    width: 100%;
+    height: 230px;
+
+    margin-bottom: 24px;
+
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .post-banner img {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+    object-position: center;
+  }
+
+  @media (max-width: 580px) {
+    .post-banner {
+      height: 200px;
+    }
+  }
+
+
+  /* ================================
+     ARTICLE BODY
+     ================================ */
+
+  .post-body {
+    margin-top: 35px;
+    color: var(--light-gray, #d6d6d6);
+
+    font-size: 16px;
+    line-height: 1.8;
+  }
+
+
+  /* ================================
+     PARAGRAPHS
+     ================================ */
+
+  .post-body :global(p) {
+    margin-bottom: 20px;
+  }
+
+
+  /* ================================
+     HEADINGS
+     ================================ */
+
+  .post-body :global(h2),
+  .post-body :global(h3),
+  .post-body :global(h4) {
+    color: var(--white-2, #fafafa);
+    line-height: 1.35;
+    font-weight: 600;
+  }
+
+  .post-body :global(h2) {
+    margin-top: 48px;
+    margin-bottom: 20px;
+    font-size: 26px;
+  }
+
+  .post-body :global(h3) {
+    margin-top: 40px;
+    margin-bottom: 18px;
+    font-size: 21px;
+  }
+
+  .post-body :global(h4) {
+    margin-top: 32px;
+    margin-bottom: 15px;
+    font-size: 18px;
+  }
+
+
+  /* ================================
+     LISTS
+     ================================ */
+
+  .post-body :global(ul),
+  .post-body :global(ol) {
+    margin: 20px 0 25px;
+    padding-left: 32px;
+  }
+
+  .post-body :global(ul) {
+    list-style: disc !important;
+  }
+
+  .post-body :global(ol) {
+    list-style: decimal !important;
+  }
+
+  .post-body :global(li) {
+    display: list-item !important;
+    list-style: inherit !important;
+
+    margin-bottom: 10px;
+    padding-left: 6px;
+  }
+
+  .post-body :global(li::marker) {
+    color: var(--orange-yellow-crayola, #ffdb70);
+  }
+
+
+  /* Nested lists */
+
+  .post-body :global(ul ul) {
+    list-style: circle !important;
+    margin: 8px 0;
+  }
+
+  .post-body :global(ul ul ul) {
+    list-style: square !important;
+  }
+
+  .post-body :global(ol ol) {
+    margin: 8px 0;
+  }
+
+
+  /* ================================
+     LINKS
+     ================================ */
+
+  .post-body :global(a) {
+    display: inline;
+
+    color: var(--orange-yellow-crayola, #ffdb70);
+    text-decoration: none;
+
+    transition: opacity 0.2s ease;
+  }
+
+  .post-body :global(a:hover) {
+    text-decoration: underline;
+    opacity: 0.85;
+  }
+
+
+  /* ================================
+     BOLD / ITALIC
+     ================================ */
+
+  .post-body :global(strong) {
+    color: var(--white-2, #fafafa);
+    font-weight: 600;
+  }
+
+  .post-body :global(em) {
+    font-style: italic;
+  }
+
+
+  /* ================================
+     BLOCKQUOTE
+     ================================ */
+
+  .post-body :global(blockquote) {
+    margin: 30px 0;
+    padding: 18px 22px;
+
+    border-left: 3px solid var(--orange-yellow-crayola, #ffdb70);
+    border-radius: 0 12px 12px 0;
+
+    background: var(--eerie-black-1, #202022);
+
+    color: var(--light-gray-70, #d6d6d6b3);
+    font-style: italic;
+  }
+
+  .post-body :global(blockquote p) {
+    margin: 0;
+  }
+
+
+  /* ================================
+     INLINE CODE
+     ================================ */
+
+  .post-body :global(code) {
+    padding: 3px 7px;
+
+    border-radius: 6px;
+
+    background: var(--eerie-black-1, #202022);
+
+    color: var(--orange-yellow-crayola, #ffdb70);
+
+    font-family: "Fira Code", "Courier New", monospace;
+    font-size: 0.9em;
+  }
+
+
+  /* ================================
+     CODE BLOCK
+     ================================ */
+
+  .post-body :global(pre) {
+    margin: 28px 0;
+    padding: 20px;
+
+    overflow-x: auto;
+
+    border: 1px solid var(--jet, #383838);
+    border-radius: 14px;
+
+    background: var(--eerie-black-1, #202022);
+  }
+
+  .post-body :global(pre code) {
+    padding: 0;
+
+    background: transparent;
+
+    color: var(--white-2, #fafafa);
+
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+
+  /* ================================
+     HORIZONTAL RULE
+     ================================ */
+
+  .post-body :global(hr) {
+    margin: 0px 0 16px;
+
+    height: 1px;
+
+    border: 0;
+
+    background: var(--jet, #383838);
+  }
+
+
+  /* ================================
+     IMAGES INSIDE POST
+     ================================ */
+
+  .post-body :global(img) {
+    display: block;
+
+    max-width: 100%;
+    height: auto;
+
+    margin: 30px auto;
+
+    border-radius: 14px;
+  }
+
+
+  /* ================================
+     TABLES
+     ================================ */
+
+  .post-body :global(table) {
+    width: 100%;
+
+    margin: 30px 0;
+
+    border-collapse: collapse;
+  }
+
+  .post-body :global(th),
+  .post-body :global(td) {
+    padding: 12px 15px;
+
+    border: 1px solid var(--jet, #383838);
+
+    text-align: left;
+  }
+
+  .post-body :global(th) {
+    color: var(--white-2, #fafafa);
+    background: var(--eerie-black-1, #202022);
+  }
+
+  /* ================================
+   PROJECT LINKS
+   ================================ */
+
+  .project-links {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+
+    margin-top: 22px;
+    margin-bottom: 5px;
+  }
+
+  .project-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    padding: 10px 15px;
+
+    border: 1px solid var(--jet, #383838);
+    border-radius: 10px;
+
+    background: var(--eerie-black-1, #202022);
+    color: var(--light-gray, #d6d6d6);
+
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1;
+
+    text-decoration: none;
+
+    transition:
+      color 0.2s ease,
+      border-color 0.2s ease,
+      background-color 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  .project-link svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+  }
+
+  .project-link:hover {
+    color: var(--orange-yellow-crayola, #ffdb70);
+    border-color: var(--orange-yellow-crayola, #ffdb70);
+
+    transform: translateY(-2px);
+  }
+
+  .project-link:active {
+    transform: translateY(0);
+  }
+
+  @media (max-width: 580px) {
+    .project-links {
+      gap: 10px;
+    }
+
+    .project-link {
+      padding: 9px 12px;
+      font-size: 13px;
+    }
+  }
+
+  /* ================================
+     MOBILE
+     ================================ */
+
+  @media (max-width: 580px) {
+
+    .post-body {
+      font-size: 15px;
+      line-height: 1.75;
+    }
+
+    .post-body :global(h2) {
+      font-size: 22px;
+    }
+
+    .post-body :global(h3) {
+      font-size: 19px;
+    }
+
+    .post-body :global(pre) {
+      padding: 15px;
+    }
+
+    .post-body :global(pre code) {
+      font-size: 13px;
+    }
+  }
+</style>

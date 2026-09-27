@@ -1,0 +1,43 @@
+---
+import { mapEmbedSrc } from '../../data/contact';
+
+// La tua email ufficiale
+const myEmail = "alessandropiergiovanni.info@gmail.com";
+---
+
+<article class="contact" data-page="contact">
+
+  <header>
+    <h2 class="h2 article-title">Contact</h2>
+  </header>
+
+  <!-- Sezione Email pulita e interattiva -->
+  <section class="contact-form" style="text-align: center; margin-top: 40px; padding: 35px; background: var(--eerie-black-2, #212122); border: 1px solid var(--jet, #383838); border-radius: 16px;">
+    
+    <div style="background: rgba(255, 191, 0, 0.1); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px auto;">
+      <ion-icon name="mail-outline" style="font-size: 28px; color: var(--orange-yellow-crayola, #ffbf00);"></ion-icon>
+    </div>
+
+    <h3 class="h3 form-title" style="margin-bottom: 10px;">Get in Touch</h3>
+    <p style="color: var(--light-gray, #d6d6d6); margin-bottom: 25px; font-size: 15px;">
+      Have a question or want to work together? Click the button below to drop me an email!
+    </p>
+
+    <!-- Pulsante con stili forzati per evitare conflitti con il tema -->
+    <a href={`mailto:${myEmail}`} style="display: inline-flex; align-items: center; justify-content: center; gap: 10px; width: 100%; max-width: 280px; margin: 0 auto; padding: 15px 30px; background: linear-gradient(to bottom right, hsl(45, 100%, 71%) 0%, hsl(36, 100%, 69%) 100%) !important; color: #1e1e1f !important; font-weight: 700 !important; font-size: 16px; border: none !important; border-radius: 12px; text-decoration: none; box-shadow: 0 16px 30px hsla(0, 0%, 0%, 0.12); cursor: pointer; transition: 0.25s ease;">
+      <ion-icon name="paper-plane" style="font-size: 18px; color: #1e1e1f !important;"></ion-icon>
+      <span style="color: #1e1e1f !important;">Send An Email</span>
+    </a>
+
+  </section>
+
+  <!-- Sezione Mappa centrata su Bari -->
+  <section class="mapbox" data-mapbox>
+    <figure style="width: 100%; border-radius: 16px; overflow: hidden;">
+      <iframe
+        src={mapEmbedSrc}
+        width="100%" height="350" style="border:0;" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </figure>
+  </section>
+
+</article>

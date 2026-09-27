@@ -1,0 +1,29 @@
+---
+import { testimonials } from '../../data/about';
+---
+
+<section class="testimonials">
+
+  <h3 class="h3 testimonials-title">Testimonials</h3>
+
+  <ul class="testimonials-list has-scrollbar">
+    {testimonials.map((item) => (
+      <li class="testimonials-item">
+        <div class="content-card" data-testimonials-item>
+
+          <figure class="testimonials-avatar-box">
+            <img src={item.avatar} alt={item.name} width="60" data-testimonials-avatar />
+          </figure>
+
+          <h4 class="h4 testimonials-item-title" data-testimonials-title>{item.name}</h4>
+
+          <div class="testimonials-text" data-testimonials-text>
+            <p>{item.text}</p>
+          </div>
+
+        </div>
+      </li>
+    ))}
+  </ul>
+
+</section>

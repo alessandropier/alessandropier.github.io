@@ -1,0 +1,138 @@
+---
+import { education, experience, skillCategories } from '../../data/resume';
+import type { TimelineSection } from '../../data/types';
+
+const timelines: TimelineSection[] = [education, experience];
+const cvPath = import.meta.env.BASE_URL + 'CV Alessandro Piergiovanni.pdf';
+---
+
+<article class="resume" data-page="resume">
+
+  <header style="display: flex !important; align-items: baseline !important; justify-content: flex-start !important; gap: 20px !important; margin-bottom: 35px !important; flex-wrap: wrap !important;">
+    <h2 class="h2 article-title" style="margin: 0 !important;">Resume</h2>
+    
+    <a href={cvPath} download="Alessandro Piergiovanni CV.pdf" class="form-btn" style="display: inline-flex !important; align-items: center !important; gap: 4px !important; padding: 4px 10px !important; font-size: 14px !important; margin: 0 !important; transform: translateY(0px);">
+      <ion-icon name="download-outline"></ion-icon>
+      <span>Download Full CV</span>
+    </a>
+  </header>
+
+  {timelines.map((timeline) => (
+    <section class="timeline">
+
+      <div class="title-wrapper">
+        <div class="icon-box">
+          <ion-icon name={timeline.icon}></ion-icon>
+        </div>
+
+        <h3 class="h3">{timeline.heading}</h3>
+      </div>
+
+      <ol class="timeline-list">
+        {timeline.entries.map((entry) => (
+          <li class="timeline-item">
+
+            <h4 class="h4 timeline-item-title">{entry.title}</h4>
+
+            <span style="color: var(--light-gray, #d6d6d6);">{entry.period}</span>
+
+            {entry.final_grade && (
+            <p class="timeline-text" style="margin-top: 4px; margin-bottom: 2px; display: flex; align-items: center; gap: 6px; flex-wrap: nowrap;">
+              <strong style="text-transform: uppercase; font-size: 0.9em; letter-spacing: 0.5px; color: var(--light-gray, #d6d6d6); white-space: nowrap;">▪ Final Grade:</strong> 
+              <span style="color: var(--orange-yellow-crayola, #ffbf00); font-weight: 600; white-space: nowrap;">{entry.final_grade}</span>
+            </p>
+          )}
+
+            <p class="timeline-text" set:html={entry.text.replace(/\n/g, '<br>')} />
+
+          </li>
+        ))}
+      </ol>
+
+    </section>
+  ))}
+
+  {/* Nuova sezione Categorie / Competenze e Interessi */}
+  <section class="skill" style="margin-top: 40px;">
+
+    <h3 class="h3 skills-title" style="margin-bottom: 25px;">Expertise & Interests</h3>
+
+    <div class="skills-categories-grid">
+      {skillCategories.map((category) => (
+        <div class="content-card skill-category-card">
+          <h4 class="h4" style="color: var(--orange-yellow-crayola, #ffbf00); margin-bottom: 15px; font-size: 16px;">
+            {category.title}
+          </h4>
+          
+          <div class="badge-list">
+            {category.items.map((item) => (
+              <span class="skill-badge">{item}</span>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+
+  </section>
+
+</article>
+
+<style>
+  /* Griglia per disporre i blocchi delle categorie */
+  .skills-categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+  }
+
+  /* Stile della card per ogni categoria con un bordo più definito */
+  .skill-category-card {
+    padding: 22px;
+    border-radius: 16px;
+    background: var(--eerie-black-2, #2b2b2c);
+    border: 1px solid var(--jet, #383838);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    transition: border-color 0.3s ease;
+  }
+
+  .skill-category-card:hover {
+    border-color: rgba(255, 191, 0, 0.4);
+  }
+
+  /* Titolo della categoria con un tocco più curato */
+  .skill-category-card h4 {
+    color: var(--orange-yellow-crayola, #ffbf00);
+    margin-bottom: 16px;
+    font-size: 16px;
+    letter-spacing: 0.3px;
+  }
+
+  /* Layout dei badge interni */
+  .badge-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  /* Stile dei singoli tag/badge rinnovato e "vivo" */
+  .skill-badge {
+    background: linear-gradient(to bottom right, var(--jet, #383838), rgba(43, 43, 44, 0.8));
+    color: var(--white-2, #fafafa);
+    padding: 7px 14px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 500;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Effetto al passaggio del mouse molto più luminoso e vivido */
+  .skill-badge:hover {
+    background: rgba(255, 191, 0, 0.12);
+    border-color: var(--orange-yellow-crayola, #ffbf00);
+    color: var(--orange-yellow-crayola, #ffbf00);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 191, 0, 0.15);
+  }
+</style>

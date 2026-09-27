@@ -1,0 +1,41 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Sidebar from '../components/Sidebar.astro';
+import Navbar from '../components/Navbar.astro';
+import About from '../components/about/About.astro';
+import Resume from '../components/resume/Resume.astro';
+import Portfolio from '../components/portfolio/Portfolio.astro';
+import Blog from '../components/blog/Blog.astro';
+import Contact from '../components/contact/Contact.astro';
+---
+
+<Layout>
+  <main>
+
+    <Sidebar />
+
+    <div class="main-content">
+
+      <Navbar />
+
+      <About />
+
+      <Resume />
+
+      <Portfolio />
+
+      <Blog />
+
+      <Contact />
+
+    </div>
+
+  </main>
+
+  <script>
+    import '../scripts/client.ts';
+  </script>
+
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js" is:inline></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js" is:inline></script>
+</Layout>

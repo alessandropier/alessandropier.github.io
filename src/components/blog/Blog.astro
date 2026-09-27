@@ -1,0 +1,51 @@
+---
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => new Date(b.data.datetime).getTime() - new Date(a.data.datetime).getTime()
+);
+---
+
+<article class="blog" data-page="blog">
+
+  <header>
+    <h2 class="h2 article-title">Blog</h2>
+  </header>
+
+  <section class="blog-posts">
+
+    <ul class="blog-posts-list">
+      {posts.map((post) => (
+        <li class="blog-post-item">
+          <a href={`/blog/${post.id}/`}>
+
+            <figure class="blog-banner-box">
+              <img src={post.data.image} alt={post.data.alt} loading="lazy" />
+            </figure>
+
+            <div class="blog-content">
+
+              <div class="blog-meta">
+                <p class="blog-category">{post.data.category}</p>
+
+                <span class="dot"></span>
+
+                <time datetime={post.data.datetime}>{post.data.dateLabel}</time>
+              </div>
+
+              <h3 class="h3 blog-item-title">{post.data.title}</h3>
+
+              <p class="blog-text">
+                {post.data.excerpt}
+              </p>
+
+            </div>
+
+          </a>
+        </li>
+      ))}
+    </ul>
+
+  </section>
+
+</article>

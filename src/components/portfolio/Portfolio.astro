@@ -1,0 +1,228 @@
+---
+import { portfolioCategories, projects } from '../../data/portfolio';
+---
+
+<article class="portfolio" data-page="portfolio">
+
+  <header>
+    <h2 class="h2 article-title">Portfolio</h2>
+  </header>
+
+  <section class="projects">
+
+    <ul class="filter-list">
+      {portfolioCategories.map((category, index) => (
+        <li class="filter-item">
+          <button class:list={[{ active: index === 0 }]} data-filter-btn>{category}</button>
+        </li>
+      ))}
+    </ul>
+
+    <div class="filter-select-box">
+      <button class="filter-select" data-select>
+        <div class="select-value" data-selecct-value>Select category</div>
+        <div class="select-icon">
+          <ion-icon name="chevron-down"></ion-icon>
+        </div>
+      </button>
+
+      <ul class="select-list">
+        {portfolioCategories.map((category) => (
+          <li class="select-item">
+            <button data-select-item>{category}</button>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <ul class="project-list">
+      {projects.map((project) => (
+        <li 
+          class="project-item active" 
+          data-filter-item 
+          data-category={project.categorySlug}
+          data-tags={project.tags ? project.tags.join(',') : ''}
+        >
+          
+          {/* Box immagine con i bottoni in overlay */}
+          <figure class="project-img">
+            <img src={project.image} alt={project.alt} loading="lazy" />
+
+            <div class="project-actions-overlay">
+              {/* 1. GitHub */}
+              {project.githubUrl && (
+                <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" class="project-action-btn" title="View Code on GitHub">
+                  <ion-icon name="logo-github"></ion-icon>
+                </a>
+              )}
+
+              {/* 2. Blog Hub */}
+              {project.blogUrl && (
+                <a href={project.blogUrl} class="project-action-btn" title="Read Blog Hub">
+                  <ion-icon name="document-text-outline"></ion-icon>
+                </a>
+              )}
+
+              {/* 3. YouTube Demo */}
+              {project.youtubeUrl && (
+                <a href={project.youtubeUrl} target="_blank" rel="noopener noreferrer" class="project-action-btn" title="Watch on YouTube">
+                  <ion-icon name="logo-youtube"></ion-icon>
+                </a>
+              )}
+
+              {/* 4. Live Demo / Test App */}
+              {project.liveUrl && (
+                <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" class="project-action-btn" title="Test Live App">
+                  <ion-icon name="globe-outline"></ion-icon>
+                </a>
+              )}
+            </div>
+          </figure>
+
+          {/* Testi e informazioni */}
+          <h3 class="project-title">{project.title}</h3>
+          <p class="project-category">{project.category}</p>
+
+          {project.tags && project.tags.length > 0 && (
+            <div class="project-tags">
+              {project.tags.map((tag) => (
+                <span class="tag-badge">{tag}</span>
+              ))}
+            </div>
+          )}
+
+        </li>
+      ))}
+    </ul>
+
+  </section>
+
+</article>
+
+<style>
+  .project-img {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .project-actions-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    flex-wrap: wrap; /* Permette ai bottoni di andare a capo se sono più di 3 */
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 15px;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    border-radius: 16px;
+  }
+
+  .project-img:hover .project-actions-overlay {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .project-action-btn {
+    background: var(--eerie-black-2, #2b2b2c);
+    color: var(--orange-yellow-crayola, #ffbf00);
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 19px;
+    transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+    border: 1px solid var(--jet, #383838);
+    text-decoration: none;
+    z-index: 5;
+  }
+
+  .project-action-btn:hover {
+    transform: scale(1.1);
+    background: var(--orange-yellow-crayola, #ffbf00);
+    color: var(--eerie-black-2, #2b2b2c);
+  }
+
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 10px;
+  }
+
+  .tag-badge {
+    font-size: 11px;
+    font-weight: 500;
+    background: var(--eerie-black-2, #2b2b2c);
+    border: 1px solid var(--jet, #383838);
+    color: var(--orange-yellow-crayola, #ffbf00);
+    padding: 3px 8px;
+    border-radius: 6px;
+  }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const filterBtns = document.querySelectorAll("[data-filter-btn]");
+    const selectItems = document.querySelectorAll("[data-select-item]");
+    const selectValue = document.querySelector("[data-selecct-value]");
+    const filterSelect = document.querySelector("[data-select]");
+    const filterItems = document.querySelectorAll("[data-filter-item]");
+
+    const filterProjects = (selectedValue) => {
+      selectedValue = selectedValue.toLowerCase().trim();
+
+      filterItems.forEach((item) => {
+        const category = item.getAttribute("data-category")?.toLowerCase() || "";
+        const tagsAttr = item.getAttribute("data-tags") || "";
+        const tags = tagsAttr.toLowerCase().split(",").map(t => t.trim());
+
+        if (selectedValue === "all" || selectedValue === "tutti") {
+          item.classList.add("active");
+        } else if (category === selectedValue || tags.includes(selectedValue)) {
+          item.classList.add("active");
+        } else {
+          item.classList.remove("active");
+        }
+      });
+    };
+
+    filterBtns.forEach((btn) => {
+      btn.addEventListener("click", function () {
+        filterBtns.forEach(b => b.classList.remove("active"));
+        this.classList.add("active");
+
+        const categoryText = this.innerText;
+        if (selectValue) selectValue.innerText = categoryText;
+        
+        filterProjects(categoryText);
+      });
+    });
+
+    if (filterSelect) {
+      filterSelect.addEventListener("click", () => {
+        filterSelect.classList.toggle("active");
+      });
+    }
+
+    selectItems.forEach((item) => {
+      item.addEventListener("click", function () {
+        const categoryText = this.innerText;
+        if (selectValue) selectValue.innerText = categoryText;
+        if (filterSelect) filterSelect.classList.remove("active");
+
+        filterProjects(categoryText);
+      });
+    });
+  });
+</script>

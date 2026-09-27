@@ -1,0 +1,19 @@
+---
+import { clients } from '../../data/about';
+---
+
+<section class="clients">
+
+  <h3 class="h3 clients-title">Clients</h3>
+
+  <ul class="clients-list has-scrollbar">
+    {clients.map((client) => (
+      <li class="clients-item">
+        <a href={client.href}>
+          <img src={client.logo} alt="client logo" />
+        </a>
+      </li>
+    ))}
+  </ul>
+
+</section>
