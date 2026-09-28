@@ -24,7 +24,7 @@ In standard **e-commerce**, keeping product presentations clean and objective ma
 1. As a **tool** for **creating** advertisements or even **exploring** garment concepts (much like [*Nike's A.I.R.*](https://about.nike.com/en-GB/magazine/creating-the-unreal-how-nike-made-its-wildest-air-footwear-yet) project, using AI to **push** creative boundaries).
 2. As a **feature** that brands can **integrate** directly into their **e-commerce**, allowing users to see a **clothing item** styled and **customized** to their own profile **on demand**.
 
-To learn more about fashion communication please have a loof at these amazing resources:
+To learn more about fashion communication please have a look at these amazing resources:
 - [*Off White - Show Notes*](https://d3uqg2ap1kpnl9.cloudfront.net/wp-content/uploads/2022/03/01120843/SpaceshipEarth_Shownotes.pdf) *by Virgil Abloh*
 - [*Free Game*](https://free---game.com/) *by Virgil Abloh*
 - [*A Manifesto According to Virgil Abloh*](https://d3uqg2ap1kpnl9.cloudfront.net/wp-content/uploads/2020/08/13111013/5.pdf) *by Virgil Abloh*

@@ -15,7 +15,7 @@
 
 ```bash
 git clone https://github.com/alessandropier/alessandropier.github.io
-cd vcard-personal-portfolio
+cd alessandropier.github.io
 bun install
 bun run dev
 ```
@@ -31,7 +31,6 @@ The dev server runs at `http://localhost:4321`.
 | `bun run preview` | Preview the production build locally |
 | `bun run check` | Type-check the project with `astro check` |
 | `bun test` | Run the test suite |
-| `bun run verify` | Build, then run the parity check against the original site |
 
 ## Project structure
 
@@ -49,4 +48,4 @@ public/         Static assets served as-is
 
 ## Configuration
 
-Set your production URL in `astro.config.mjs` (`site`) so the sitemap and canonical URLs resolve correctly.
+Set your production URL in `astro.config.mjs` (`site`).

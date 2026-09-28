@@ -3,19 +3,42 @@ import { education, experience, skillCategories } from '../../data/resume';
 import type { TimelineSection } from '../../data/types';
 
 const timelines: TimelineSection[] = [education, experience];
-const cvPath = import.meta.env.BASE_URL + 'CV Alessandro Piergiovanni.pdf';
+const cvPathEN = import.meta.env.BASE_URL + 'CV Alessandro Piergiovanni EN.pdf';
+const cvPathIT = import.meta.env.BASE_URL + 'CV Alessandro Piergiovanni IT.pdf';
 ---
 
 <article class="resume" data-page="resume">
 
-  <header style="display: flex !important; align-items: baseline !important; justify-content: flex-start !important; gap: 20px !important; margin-bottom: 35px !important; flex-wrap: wrap !important;">
-    <h2 class="h2 article-title" style="margin: 0 !important;">Resume</h2>
-    
-    <a href={cvPath} download="Alessandro Piergiovanni CV.pdf" class="form-btn" style="display: inline-flex !important; align-items: center !important; gap: 4px !important; padding: 4px 10px !important; font-size: 14px !important; margin: 0 !important; transform: translateY(0px);">
+  <header
+    style="display: flex !important; align-items: baseline !important; justify-content: flex-start !important; gap: 10px !important; margin-bottom: 35px !important; flex-wrap: wrap !important;"
+  >
+  <h2 class="h2 article-title" style="margin: 0 !important;">Resume</h2>
+
+  <div class="cv-downloads">
+    <span class="cv-download-label">
       <ion-icon name="download-outline"></ion-icon>
-      <span>Download Full CV</span>
+      Download
+    </span>
+
+    <a
+      href={cvPathEN}
+      download="Alessandro Piergiovanni CV EN.pdf"
+      class="cv-language-btn"
+      title="Download CV in English"
+    >
+      EN
     </a>
-  </header>
+
+    <a
+      href={cvPathIT}
+      download="Alessandro Piergiovanni CV IT.pdf"
+      class="cv-language-btn"
+      title="Download CV in Italian"
+    >
+      IT
+    </a>
+  </div>
+</header>
 
   {timelines.map((timeline) => (
     <section class="timeline">
@@ -135,4 +158,62 @@ const cvPath = import.meta.env.BASE_URL + 'CV Alessandro Piergiovanni.pdf';
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(255, 191, 0, 0.15);
   }
+
+  .cv-downloads {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cv-download-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--light-gray, #d6d6d6);
+  font-size: 14px;
+  font-weight: 500;
+  margin-right: 2px;
+}
+
+.cv-download-label ion-icon {
+  font-size: 17px;
+  color: var(--orange-yellow-crayola, #ffbf00);
+}
+
+.cv-language-btn {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 38px;
+  padding: 5px 9px;
+
+  border: 1px solid var(--jet, #383838);
+  border-radius: 8px;
+
+  background: var(--eerie-black-2, #2b2b2c);
+  color: var(--white-2, #fafafa);
+
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-decoration: none;
+
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.cv-language-btn:hover {
+  color: var(--orange-yellow-crayola, #ffbf00);
+  border-color: var(--orange-yellow-crayola, #ffbf00);
+  background: rgba(255, 191, 0, 0.08);
+  transform: translateY(-1px);
+}
+
+.cv-language-btn:active {
+  transform: translateY(0);
+}
 </style>
