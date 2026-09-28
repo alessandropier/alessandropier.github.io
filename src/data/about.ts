@@ -2,8 +2,8 @@ import type { Service, Testimonial, ModalDefault, Client } from './types';
 
 export const aboutText: string[] = [
   "I am a <b style='font-weight: 800;'>Software Engineer</b> from Molfetta (BA), Italy, with a degree in Computer Science " +
-  "(<b style='font-weight: 800;'>110 with highest honors</b>). I was rewarded by <b style='font-weight: 800;'>Forbes</b> " +
-  "as Top Graduates 2025 on <b style='font-weight: 800;'>applying AI to fashion</b>. ",
+  "(<b style='font-weight: 800;'>110 with highest honors</b>). I was recognized by <b style='font-weight: 800;'>Forbes</b> " +
+  "as Top Graduates 2025 for <b style='font-weight: 800;'>applying AI to fashion</b>. ",
   
   "I am <b style='font-weight: 800;'>curious</b> and goal driven, able to <b style='font-weight: 800;'>break down workloads</b> into small steps " +
   "and <b style='font-weight: 800;'>milestones</b>. I am comfortable <b style='font-weight: 800;'>taking ownership</b>, coordinating with others and providing " +
